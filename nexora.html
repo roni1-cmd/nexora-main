@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Nexora</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="Nexora.png">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #000;
+            color: white;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Faint diagonal background pattern */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                url('Corea.png') center/cover no-repeat,
+                linear-gradient(138deg, 
+                    rgba(63, 159, 255, 0.03) 0%, 
+                    rgba(156, 77, 255, 0.03) 25%,
+                    rgba(255, 77, 156, 0.03) 50%,
+                    rgba(63, 159, 255, 0.03) 75%,
+                    rgba(156, 77, 255, 0.03) 100%
+                ),
+                repeating-linear-gradient(138deg,
+                    transparent 0px,
+                    transparent 2px,
+                    rgba(255, 255, 255, 0.005) 2px,
+                    rgba(255, 255, 255, 0.005) 4px
+                );
+            opacity: 0.4;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Header Logo */
+        .header-logo {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            z-index: 1000;
+            width: 120px;
+            height: auto;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 0 10px rgba(63, 159, 255, 0.3));
+        }
+
+        .header-logo:hover {
+            transform: scale(1.05);
+            filter: drop-shadow(0 0 20px rgba(156, 77, 255, 0.5));
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Hero Section */
+        .hero-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 900px;
+        }
+
+        .hero-section h1 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: clamp(60px, 12vw, 120px);
+            background: linear-gradient(45deg, #3F9FFF, #9C4DFF, #FF4D9C, #FF2EB2, #FF76B2, #6A00FF);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 30px;
+            text-shadow: 
+                0 0 20px rgba(63, 159, 255, 0.3),
+                0 0 40px rgba(156, 77, 255, 0.2);
+            animation: pixelGlow 3s ease-in-out infinite alternate, gradientShift 6s ease-in-out infinite;
+            position: relative;
+        }
+
+        .hero-section h1::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, #3F9FFF, #9C4DFF, #FF4D9C, #FF2EB2, #FF76B2, #6A00FF);
+            background-size: 400% 400%;
+            animation: gradientShift 6s ease-in-out infinite;
+            opacity: 0.1;
+            z-index: -1;
+            filter: blur(20px);
+        }
+
+        @keyframes pixelGlow {
+            0% { text-shadow: 0 0 20px rgba(63, 159, 255, 0.3), 0 0 40px rgba(156, 77, 255, 0.2); }
+            100% { text-shadow: 0 0 30px rgba(63, 159, 255, 0.5), 0 0 60px rgba(156, 77, 255, 0.3); }
+        }
+
+        /* Pixel-style search bar */
+        .search-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 30px;
+        }
+
+        .search-bar {
+            width: 100%;
+            height: 60px;
+            background: rgba(0, 0, 0, 0.9);
+            border: 3px solid;
+            border-image: linear-gradient(45deg, #3F9FFF, #9C4DFF, #FF4D9C, #FF76B2) 1;
+            border-radius: 0;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 
+                0 0 0 1px rgba(63, 159, 255, 0.3),
+                inset 0 0 20px rgba(63, 159, 255, 0.1),
+                0 0 30px rgba(156, 77, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .search-bar input {
+            width: calc(100% - 70px);
+            height: 100%;
+            padding: 0 20px;
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 18px;
+            font-family: 'Poppins', sans-serif;
+            outline: none;
+        }
+
+        .search-bar input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .search-button {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #3F9FFF, #9C4DFF, #FF4D9C);
+            background-size: 200% 200%;
+            border: none;
+            color: #fff;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Press Start 2P', cursive;
+            animation: gradientShift 3s ease-in-out infinite;
+        }
+
+        .search-button:hover {
+            background: linear-gradient(45deg, #FF2EB2, #6A00FF, #FF76B2);
+            background-size: 200% 200%;
+            box-shadow: 0 0 25px rgba(255, 118, 178, 0.6);
+            animation: gradientShift 1.5s ease-in-out infinite;
+        }
+
+        .search-button:active {
+            transform: scale(0.95);
+        }
+
+        /* Pixel arrow icon */
+        .arrow-icon {
+            width: 16px;
+            height: 16px;
+            background: currentColor;
+            position: relative;
+            transform: rotate(-45deg);
+        }
+
+        .arrow-icon::before,
+        .arrow-icon::after {
+            content: '';
+            position: absolute;
+            background: currentColor;
+        }
+
+        .arrow-icon::before {
+            width: 16px;
+            height: 4px;
+            top: 6px;
+            left: -6px;
+        }
+
+        .arrow-icon::after {
+            width: 4px;
+            height: 16px;
+            top: -6px;
+            left: 6px;
+        }
+
+        .description {
+            max-width: 800px;
+            margin: 0 0 40px 0;
+            font-size: 20px;
+            line-height: 1.8;
+            padding: 0 20px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.9) 0%,
+                rgba(255, 118, 178, 0.8) 25%,
+                rgba(156, 77, 255, 0.8) 50%,
+                rgba(63, 159, 255, 0.8) 75%,
+                rgba(255, 255, 255, 0.9) 100%
+            );
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+            letter-spacing: 0.5px;
+        }
+
+        .buttons-container {
+            display: flex;
+            gap: 20px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .pixel-button {
+            padding: 15px 25px;
+            border: 3px solid #3F9FFF;
+            background: rgba(0, 0, 0, 0.9);
+            color: #fff;
+            font-weight: 500;
+            border-radius: 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 12px;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 0 1px rgba(63, 159, 255, 0.3);
+        }
+
+        .pixel-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 118, 178, 0.4), 
+                transparent
+            );
+            transition: left 0.5s ease;
+        }
+
+        .pixel-button:hover::before {
+            left: 100%;
+        }
+
+        .pixel-button:hover {
+            background: linear-gradient(45deg, #3F9FFF, #9C4DFF, #FF4D9C);
+            border-color: #FF76B2;
+            box-shadow: 
+                0 0 20px rgba(255, 118, 178, 0.4),
+                0 0 40px rgba(156, 77, 255, 0.3),
+                inset 0 0 20px rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .pixel-button:nth-child(2):hover {
+            background: linear-gradient(45deg, #FF2EB2, #6A00FF, #9C4DFF);
+            border-color: #FF2EB2;
+            box-shadow: 
+                0 0 20px rgba(255, 46, 178, 0.4),
+                0 0 40px rgba(106, 0, 255, 0.3),
+                inset 0 0 20px rgba(255, 255, 255, 0.1);
+        }
+
+        .pixel-button:active {
+            transform: translateY(0);
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .header-logo {
+                font-size: 18px;
+                top: 20px;
+                left: 20px;
+            }
+            
+            .hero-section {
+                padding: 0 15px;
+            }
+            
+            .buttons-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .pixel-button {
+                width: 200px;
+            }
+            
+            .description {
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-logo {
+                font-size: 16px;
+                top: 15px;
+                left: 15px;
+            }
+            
+            .search-bar {
+                height: 50px;
+            }
+            
+            .search-button {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .search-bar input {
+                width: calc(100% - 60px);
+                font-size: 16px;
+            }
+            
+            .description {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- Header Logo -->
+<img src="Credits.png" alt="Credits" class="header-logo" />
+
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="hero-content">
+        <h1>nexora</h1>
+        
+        <div class="description">
+            Talk smart. Think smarter.
+        </div>
+        
+        <div class="search-container">
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="What do you want to know?" />
+                <button class="search-button" id="searchButton">
+                    <div class="arrow-icon"></div>
+                </button>
+            </div>
+        </div>
+        
+        <div class="buttons-container">
+            <button class="pixel-button">BUILD WITH nexora</button>
+            <button class="pixel-button">LEARN MORE</button>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Search functionality
+    function handleSearch() {
+        window.location.href = 'https://nexoracog.netlify.app';
+    }
+
+    // Add event listeners
+    document.getElementById('searchButton').addEventListener('click', handleSearch);
+    
+    document.getElementById('searchInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            handleSearch();
+        }
+    });
+
+    // Add some pixel-style interaction effects
+    document.querySelectorAll('.pixel-button').forEach(button => {
+        button.addEventListener('click', function() {
+            // Create a ripple effect
+            const ripple = document.createElement('span');
+            ripple.style.position = 'absolute';
+            ripple.style.width = '4px';
+            ripple.style.height = '4px';
+            ripple.style.background = '#fff';
+            ripple.style.left = '50%';
+            ripple.style.top = '50%';
+            ripple.style.transform = 'translate(-50%, -50%)';
+            ripple.style.animation = 'pixelRipple 0.6s ease-out';
+            this.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        });
+    });
+
+    // Add pixel ripple animation
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes pixelRipple {
+            0% {
+                width: 4px;
+                height: 4px;
+                opacity: 1;
+            }
+            100% {
+                width: 100px;
+                height: 100px;
+                opacity: 0;
+            }
+        }
+    `;
+    document.head.appendChild(style);
+</script>
+
+</body>
+</html>
