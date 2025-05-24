@@ -6,15 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="Nexora.png">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         /* General Styles */
         * {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
+            box-sizing: border-box; 
         }
 
         body {
@@ -25,7 +24,7 @@
             position: relative;
         }
 
-        /* Faint diagonal background pattern */
+        /* Background with image and pattern */
         body::before {
             content: '';
             position: fixed;
@@ -35,6 +34,9 @@
             height: 100%;
             background: 
                 url('Corea.png') center/cover no-repeat,
+                radial-gradient(circle at 20% 80%, rgba(63, 159, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(156, 77, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(255, 77, 156, 0.05) 0%, transparent 50%),
                 linear-gradient(138deg, 
                     rgba(63, 159, 255, 0.03) 0%, 
                     rgba(156, 77, 255, 0.03) 25%,
@@ -96,8 +98,10 @@
             max-width: 900px;
         }
 
+        /* Nexora title - no glow but with color animation */
         .hero-section h1 {
-            font-family: 'Press Start 2P', cursive;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
             font-size: clamp(60px, 12vw, 120px);
             background: linear-gradient(45deg, #3F9FFF, #9C4DFF, #FF4D9C, #FF2EB2, #FF76B2, #6A00FF);
             background-size: 400% 400%;
@@ -105,34 +109,12 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             margin-bottom: 30px;
-            text-shadow: 
-                0 0 20px rgba(63, 159, 255, 0.3),
-                0 0 40px rgba(156, 77, 255, 0.2);
-            animation: pixelGlow 3s ease-in-out infinite alternate, gradientShift 6s ease-in-out infinite;
-            position: relative;
-        }
-
-        .hero-section h1::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, #3F9FFF, #9C4DFF, #FF4D9C, #FF2EB2, #FF76B2, #6A00FF);
-            background-size: 400% 400%;
             animation: gradientShift 6s ease-in-out infinite;
-            opacity: 0.1;
-            z-index: -1;
-            filter: blur(20px);
+            position: relative;
+            letter-spacing: 2px;
         }
 
-        @keyframes pixelGlow {
-            0% { text-shadow: 0 0 20px rgba(63, 159, 255, 0.3), 0 0 40px rgba(156, 77, 255, 0.2); }
-            100% { text-shadow: 0 0 30px rgba(63, 159, 255, 0.5), 0 0 60px rgba(156, 77, 255, 0.3); }
-        }
-
-        /* Pixel-style search bar */
+        /* Enhanced search container with suggestions */
         .search-container {
             position: relative;
             width: 100%;
@@ -146,14 +128,23 @@
             background: rgba(0, 0, 0, 0.9);
             border: 3px solid;
             border-image: linear-gradient(45deg, #3F9FFF, #9C4DFF, #FF4D9C, #FF76B2) 1;
-            border-radius: 0;
+            border-radius: 12px;
             overflow: hidden;
             position: relative;
             box-shadow: 
                 0 0 0 1px rgba(63, 159, 255, 0.3),
                 inset 0 0 20px rgba(63, 159, 255, 0.1),
                 0 0 30px rgba(156, 77, 255, 0.2);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(15px);
+            transition: all 0.3s ease;
+        }
+
+        .search-bar:focus-within {
+            box-shadow: 
+                0 0 0 2px rgba(63, 159, 255, 0.5),
+                inset 0 0 30px rgba(63, 159, 255, 0.15),
+                0 0 50px rgba(156, 77, 255, 0.3);
+            transform: translateY(-2px);
         }
 
         .search-bar input {
@@ -165,6 +156,7 @@
             color: #fff;
             font-size: 18px;
             font-family: 'Poppins', sans-serif;
+            font-weight: 400;
             outline: none;
         }
 
@@ -175,21 +167,21 @@
 
         .search-button {
             position: absolute;
-            top: 0;
-            right: 0;
-            width: 60px;
-            height: 60px;
+            top: 6px;
+            right: 6px;
+            width: 48px;
+            height: 48px;
             background: linear-gradient(45deg, #3F9FFF, #9C4DFF, #FF4D9C);
             background-size: 200% 200%;
             border: none;
             color: #fff;
-            font-size: 20px;
+            font-size: 18px;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: 'Press Start 2P', cursive;
+            border-radius: 8px;
             animation: gradientShift 3s ease-in-out infinite;
         }
 
@@ -198,46 +190,88 @@
             background-size: 200% 200%;
             box-shadow: 0 0 25px rgba(255, 118, 178, 0.6);
             animation: gradientShift 1.5s ease-in-out infinite;
+            transform: scale(1.05);
         }
 
         .search-button:active {
             transform: scale(0.95);
         }
 
-        /* Pixel arrow icon */
-        .arrow-icon {
-            width: 16px;
-            height: 16px;
-            background: currentColor;
-            position: relative;
-            transform: rotate(-45deg);
+        /* Search icon */
+        .search-icon {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
         }
 
-        .arrow-icon::before,
-        .arrow-icon::after {
-            content: '';
+        /* Search suggestions dropdown */
+        .suggestions-dropdown {
             position: absolute;
-            background: currentColor;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.95);
+            border: 2px solid rgba(63, 159, 255, 0.3);
+            border-radius: 12px;
+            backdrop-filter: blur(15px);
+            max-height: 300px;
+            overflow-y: auto;
+            z-index: 1000;
+            margin-top: 8px;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            pointer-events: none;
         }
 
-        .arrow-icon::before {
+        .suggestions-dropdown.show {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+        }
+
+        .suggestion-item {
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .suggestion-item:last-child {
+            border-bottom: none;
+        }
+
+        .suggestion-item:hover {
+            background: linear-gradient(90deg, rgba(63, 159, 255, 0.1), rgba(156, 77, 255, 0.1));
+            color: #3F9FFF;
+        }
+
+        .suggestion-icon {
             width: 16px;
-            height: 4px;
-            top: 6px;
-            left: -6px;
+            height: 16px;
+            opacity: 0.7;
         }
 
-        .arrow-icon::after {
-            width: 4px;
-            height: 16px;
-            top: -6px;
-            left: 6px;
+        /* Typing effect */
+        .typing-text {
+            border-right: 2px solid rgba(255, 255, 255, 0.7);
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { border-color: rgba(255, 255, 255, 0.7); }
+            51%, 100% { border-color: transparent; }
         }
 
         .description {
             max-width: 800px;
             margin: 0 0 40px 0;
-            font-size: 20px;
+            font-size: 22px;
             line-height: 1.8;
             padding: 0 20px;
             font-family: 'Poppins', sans-serif;
@@ -265,21 +299,22 @@
         }
 
         .pixel-button {
-            padding: 15px 25px;
+            padding: 18px 30px;
             border: 3px solid #3F9FFF;
             background: rgba(0, 0, 0, 0.9);
             color: #fff;
-            font-weight: 500;
-            border-radius: 0;
+            font-weight: 600;
+            border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-family: 'Press Start 2P', cursive;
-            font-size: 12px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
             text-transform: uppercase;
             position: relative;
             overflow: hidden;
             backdrop-filter: blur(10px);
             box-shadow: 0 0 0 1px rgba(63, 159, 255, 0.3);
+            letter-spacing: 1px;
         }
 
         .pixel-button::before {
@@ -324,10 +359,93 @@
             transform: translateY(0);
         }
 
+        /* Footer */
+        .footer {
+            background: rgba(0, 0, 0, 0.9);
+            border-top: 2px solid rgba(63, 159, 255, 0.2);
+            padding: 60px 20px 30px;
+            margin-top: 100px;
+            backdrop-filter: blur(15px);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+
+        .footer-section h3 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #3F9FFF, #9C4DFF, #FF4D9C);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-section p, .footer-section a {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: #3F9FFF;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-family: 'Poppins', sans-serif;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border: 2px solid rgba(63, 159, 255, 0.3);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .social-link:hover {
+            border-color: #3F9FFF;
+            background: rgba(63, 159, 255, 0.1);
+            color: #3F9FFF;
+            transform: translateY(-2px);
+        }
+
         /* Responsive design */
         @media (max-width: 768px) {
             .header-logo {
-                font-size: 18px;
+                width: 100px;
                 top: 20px;
                 left: 20px;
             }
@@ -348,11 +466,20 @@
             .description {
                 font-size: 18px;
             }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .social-links {
+                justify-content: center;
+            }
         }
 
         @media (max-width: 480px) {
             .header-logo {
-                font-size: 16px;
+                width: 80px;
                 top: 15px;
                 left: 15px;
             }
@@ -362,18 +489,43 @@
             }
             
             .search-button {
-                width: 50px;
-                height: 50px;
+                width: 40px;
+                height: 40px;
+                top: 5px;
+                right: 5px;
             }
             
             .search-bar input {
-                width: calc(100% - 60px);
+                width: calc(100% - 55px);
                 font-size: 16px;
             }
             
             .description {
                 font-size: 16px;
             }
+
+            .suggestion-item {
+                padding: 12px 15px;
+            }
+        }
+
+        /* Scrollbar styling */
+        .suggestions-dropdown::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .suggestions-dropdown::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+        }
+
+        .suggestions-dropdown::-webkit-scrollbar-thumb {
+            background: rgba(63, 159, 255, 0.5);
+            border-radius: 3px;
+        }
+
+        .suggestions-dropdown::-webkit-scrollbar-thumb:hover {
+            background: rgba(63, 159, 255, 0.7);
         }
     </style>
 </head>
@@ -389,62 +541,242 @@
         <h1>nexora</h1>
         
         <div class="description">
-            Talk smart. Think smarter.
+            <span id="typingText" class="typing-text"></span>
         </div>
         
         <div class="search-container">
             <div class="search-bar">
-                <input type="text" id="searchInput" placeholder="What do you want to know?" />
+                <input type="text" id="searchInput" placeholder="What do you want to know?" autocomplete="off" />
                 <button class="search-button" id="searchButton">
-                    <div class="arrow-icon"></div>
+                    <svg class="search-icon" viewBox="0 0 24 24">
+                        <path d="M21 21L16.514 16.506M19 10.5C19 15.194 15.194 19 10.5 19S2 15.194 2 10.5 5.806 2 10.5 2 19 5.806 19 10.5Z" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
+                    </svg>
                 </button>
+            </div>
+            <div class="suggestions-dropdown" id="suggestionsDropdown">
+                <!-- Suggestions will be populated here -->
             </div>
         </div>
         
         <div class="buttons-container">
-            <button class="pixel-button">BUILD WITH nexora</button>
-            <button class="pixel-button">LEARN MORE</button>
+            <button class="pixel-button">Build with Nexora</button>
+            <button class="pixel-button">Learn More</button>
         </div>
     </div>
 </section>
 
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-section">
+            <h3>nexora</h3>
+            <p>Talk smart, think smarter.</p>
+            <div class="social-links">
+                <a href="#" class="social-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"/>
+                    </svg>
+                </a>
+                <a href="#" class="social-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.174-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.402.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.357-.629-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24.009 12.017 24.009c6.624 0 11.99-5.367 11.99-11.988C24.007 5.367 18.641.001 12.017.001z"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+        
+        <div class="footer-section">
+            <h3>product</h3>
+            <div class="footer-links">
+                <a href="#">Features</a>
+                <a href="#">Pricing</a>
+                <a href="#">API</a>
+                <a href="#">Documentation</a>
+                <a href="#">Integrations</a>
+            </div>
+        </div>
+        
+        <div class="footer-section">
+            <h3>company</h3>
+            <div class="footer-links">
+                <a href="#">About</a>
+                <a href="#">Blog</a>
+                <a href="#">Careers</a>
+                <a href="#">Press</a>
+                <a href="#">Contact</a>
+            </div>
+        </div>
+        
+        <div class="footer-section">
+            <h3>support</h3>
+            <div class="footer-links">
+                <a href="#">Help Center</a>
+                <a href="#">Community</a>
+                <a href="#">Status</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer-bottom">
+        <p>&copy; 2025 nexora. All rights reserved. </p>
+    </div>
+</footer>
+
 <script>
-    // Search functionality
-    function handleSearch() {
-        window.location.href = 'https://nexoracog.netlify.app';
+    // Search suggestions data
+    const suggestions = [
+        { text: "How does artificial intelligence work?", icon: "🤖" },
+        { text: "What is machine learning?", icon: "🧠" },
+        { text: "Explain quantum computing", icon: "⚛️" },
+        { text: "Best programming languages to learn", icon: "💻" },
+        { text: "How to build a website", icon: "🌐" },
+        { text: "What is blockchain technology?", icon: "🔗" },
+        { text: "Climate change solutions", icon: "🌍" },
+        { text: "Space exploration latest news", icon: "🚀" },
+        { text: "Healthy lifestyle tips", icon: "💪" },
+        { text: "Investment strategies for beginners", icon: "📈" }
+    ];
+
+    // Typing effect for description
+    const typingTexts = [
+        "Talk smart. Think smarter.",
+        "AI-powered conversations.",
+        "Intelligent answers, instantly.",
+        "Your smart assistant awaits."
+    ];
+
+    let currentTextIndex = 0;
+    let currentCharIndex = 0;
+    let isDeleting = false;
+    const typingElement = document.getElementById('typingText');
+
+    function typeText() {
+        const currentText = typingTexts[currentTextIndex];
+        
+        if (isDeleting) {
+            typingElement.textContent = currentText.substring(0, currentCharIndex - 1);
+            currentCharIndex--;
+        } else {
+            typingElement.textContent = currentText.substring(0, currentCharIndex + 1);
+            currentCharIndex++;
+        }
+
+        let typeSpeed = isDeleting ? 50 : 100;
+
+        if (!isDeleting && currentCharIndex === currentText.length) {
+            typeSpeed = 2000; // Pause at end
+            isDeleting = true;
+        } else if (isDeleting && currentCharIndex === 0) {
+            isDeleting = false;
+            currentTextIndex = (currentTextIndex + 1) % typingTexts.length;
+            typeSpeed = 500; // Pause before starting new text
+        }
+
+        setTimeout(typeText, typeSpeed);
     }
 
-    // Add event listeners
-    document.getElementById('searchButton').addEventListener('click', handleSearch);
+    // Start typing effect
+    typeText();
+
+    // Search functionality
+    const searchInput = document.getElementById('searchInput');
+    const searchButton = document.getElementById('searchButton');
+    const suggestionsDropdown = document.getElementById('suggestionsDropdown');
+
+    function showSuggestions() {
+        const query = searchInput.value.toLowerCase().trim();
+        
+        if (query.length === 0) {
+            suggestionsDropdown.classList.remove('show');
+            return;
+        }
+
+        const filteredSuggestions = suggestions.filter(suggestion =>
+            suggestion.text.toLowerCase().includes(query)
+        );
+
+        if (filteredSuggestions.length === 0) {
+            suggestionsDropdown.classList.remove('show');
+            return;
+        }
+
+        suggestionsDropdown.innerHTML = filteredSuggestions
+            .slice(0, 6) // Limit to 6 suggestions
+            .map(suggestion => `
+                <div class="suggestion-item" onclick="selectSuggestion('${suggestion.text}')">
+                    <span class="suggestion-icon">${suggestion.icon}</span>
+                    <span>${suggestion.text}</span>
+                </div>
+            `).join('');
+
+        suggestionsDropdown.classList.add('show');
+    }
+
+    function selectSuggestion(text) {
+        searchInput.value = text;
+        suggestionsDropdown.classList.remove('show');
+        handleSearch();
+    }
+
+    function handleSearch() {
+        const query = searchInput.value.trim();
+        if (query) {
+            // Add a subtle animation before redirect
+            searchButton.style.transform = 'scale(0.9)';
+            setTimeout(() => {
+                window.location.href = 'https://nexoracog.netlify.app';
+            }, 150);
+        }
+    }
+
+    // Event listeners
+    searchInput.addEventListener('input', showSuggestions);
+    searchInput.addEventListener('focus', showSuggestions);
     
-    document.getElementById('searchInput').addEventListener('keypress', function(e) {
+    searchInput.addEventListener('keypress', function(e) {
         if (e.key === 'Enter') {
             handleSearch();
         }
     });
 
-    // Add some pixel-style interaction effects
+    searchButton.addEventListener('click', handleSearch);
+
+    // Hide suggestions when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.search-container')) {
+            suggestionsDropdown.classList.remove('show');
+        }
+    });
+
+    // Enhanced button interactions
     document.querySelectorAll('.pixel-button').forEach(button => {
         button.addEventListener('click', function() {
-            // Create a ripple effect
-            const ripple = document.createElement('span');
-            ripple.style.position = 'absolute';
-            ripple.style.width = '4px';
-            ripple.style.height = '4px';
-            ripple.style.background = '#fff';
-            ripple.style.left = '50%';
-            ripple.style.top = '50%';
-            ripple.style.transform = 'translate(-50%, -50%)';
-            ripple.style.animation = 'pixelRipple 0.6s ease-out';
-            this.appendChild(ripple);
-            
-            setTimeout(() => {
-                ripple.remove();
-            }, 600);
+            // Create multiple ripple effects for enhanced feedback
+            for (let i = 0; i < 3; i++) {
+                setTimeout(() => {
+                    const ripple = document.createElement('span');
+                    ripple.style.position = 'absolute';
+                    ripple.style.width = '4px';
+                    ripple.style.height = '4px';
+                    ripple.style.background = '#fff';
+                    ripple.style.left = '50%';
+                    ripple.style.top = '50%';
+                    ripple.style.transform = 'translate(-50%, -50%)';
+                    ripple.style.animation = 'pixelRipple 0.8s ease-out';
+                    ripple.style.borderRadius = '50%';
+                    this.appendChild(ripple);
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 800);
+                }, i * 100);
+            }
         });
     });
 
-    // Add pixel ripple animation
+    // Add enhanced pixel ripple animation
     const style = document.createElement('style');
     style.textContent = `
         @keyframes pixelRipple {
@@ -454,13 +786,36 @@
                 opacity: 1;
             }
             100% {
-                width: 100px;
-                height: 100px;
+                width: 120px;
+                height: 120px;
                 opacity: 0;
             }
         }
     `;
     document.head.appendChild(style);
+
+    // Smooth scroll for better UX
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    // Add subtle parallax effect to background
+    window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        const parallax = document.querySelector('body::before');
+        if (parallax) {
+            document.body.style.transform = `translateY(${scrolled * 0.1}px)`;
+        }
+    });
 </script>
 
 </body>
